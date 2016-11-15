@@ -78,7 +78,7 @@ public class CertificateService {
 			return keyGenerator.generateKeyPair();
 		}
 	}
-	
+
 	private KeyPair generateECDSAKeyPair() throws GeneralSecurityException {
 		ECParameterSpec ecSpec = ECNamedCurveTable.getParameterSpec("prime256v1");
 		KeyPairGenerator generator = KeyPairGenerator.getInstance("ECDSA", SECURITY_PROVIDER);
@@ -197,7 +197,7 @@ public class CertificateService {
 		final X509v3CertificateBuilder certBuilder = new X509v3CertificateBuilder(issuer, new BigInteger("" + new Random().nextInt(10) + System.currentTimeMillis()), notBefore,
 				notAfter, subject, keyInfo);
 
-		certBuilder.addExtension(Extension.keyUsage, true, new KeyUsage(KeyUsage.keyCertSign | KeyUsage.cRLSign));
+		certBuilder.addExtension(Extension.keyUsage, true, new KeyUsage(KeyUsage.keyCertSign | KeyUsage.digitalSignature | KeyUsage.cRLSign));
 
 
 		// Sign the new certificate with the private key of the trusted third
@@ -218,7 +218,7 @@ public class CertificateService {
 		final X509v3CertificateBuilder certBuilder = new X509v3CertificateBuilder(issuer, new BigInteger("" + new Random().nextInt(10) + System.currentTimeMillis()), notBefore,
 				notAfter, subject, keyInfo);
 
-		certBuilder.addExtension(Extension.keyUsage, true, new KeyUsage(KeyUsage.keyCertSign));
+		certBuilder.addExtension(Extension.keyUsage, true, new KeyUsage(KeyUsage.keyCertSign | KeyUsage.digitalSignature));
 
 
 		// Sign the new certificate with the private key of the trusted third
